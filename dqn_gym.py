@@ -138,7 +138,7 @@ while True:
         action = env.action_space.sample()
     else:
         # exploit
-        state_a = np.array([state], copy=False)
+        state_a = np.asarray([state])
         state_v = torch.tensor(state_a).to(device)
         q_vals_v = net(state_v)
         _, act_v = torch.max(q_vals_v, dim=1)
