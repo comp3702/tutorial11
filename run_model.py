@@ -61,7 +61,7 @@ total_reward = 0
 episodes = 0
 
 while True:
-    state_a = np.array([state], copy=False)
+    state_a = np.array([state]) #removed copy=False to work on numpy 2.x
     state_v = torch.tensor(state_a).to(device)
     q_vals_v = net(state_v)
     _, act_v = torch.max(q_vals_v, dim=1)
