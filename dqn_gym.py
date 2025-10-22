@@ -16,7 +16,7 @@ import yaml
 parser = argparse.ArgumentParser()
 parser.add_argument("-e", "--env", default="CartPole-v1", help="Full name of the environment, e.g. CartPole-v1, LunarLander-v3, etc.")
 parser.add_argument("-c", "--config_file", default="config/dqn.yaml", help="Config file with hyper-parameters")
-parser.add_argument("-n", "--network", default='s',
+parser.add_argument("-n", "--network", default='single-hidden',
                     help="DQN network architecture `single-hidden` for single hidden layer, `two-hidden` for 2 hidden layers and `duelling-dqn` for duelling DQN",
                     choices=['single-hidden', 'two-hidden', 'duelling-dqn'])
 parser.add_argument("-s", "--seed", type=int, help="Manual seed (leave blank for random seed)")
@@ -171,7 +171,7 @@ while True:
             fps = (frame_idx - episode_frame) / (time.time() - episode_start)
             print(f"Frame: {frame_idx}: Episode: {episode_no}, R100: {r100: .2f}, MaxR: {max_reward: .2f}, R: {episode_reward: .2f}, FPS: {fps: .1f}, L100: {l100: .2f}, Epsilon: {epsilon: .4f}")
 
-            # visualize the training when reached 95% of the target R100
+            # visualize the training when reached 95% of the target R100; you should comment this out to speed up training
             if not visualizer_on and r100 > 0.95 * params['stopping_reward']:
                 env = gym.make(args.env, render_mode='human')
                 env.reset()
@@ -209,3 +209,5 @@ while True:
     if frame_idx > params['max_frames']:
         print(f"Ran out of time at {time.time() - start}")
         break
+
+print(f"Completed training in {time.time() - start}")
